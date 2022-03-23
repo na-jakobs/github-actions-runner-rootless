@@ -40,3 +40,12 @@ unset RUNNER_TOKEN
 trap deregister_runner SIGINT SIGQUIT SIGTERM
 
 ./bin/runsvc.sh
+rv=$?
+
+# For any other return value, let the script and the Docker container terminate.
+echo "*** Exit code $rv"
+
+if [ $rv -ne 0 ]; then
+    echo "*** Non-zero exit code, sleeping for 60s"
+    sleep 60s
+fi
